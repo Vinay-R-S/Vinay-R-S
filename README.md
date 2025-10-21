@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px" />
+  <img src="./assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px"/>
 </div>
 
 <hr>
@@ -58,12 +58,8 @@
       <img src="https://skills.syvixor.com/api/icons?perline=15&i=figma,canva,postman,notion,obsidian,obs">
     </td>
     <td style="text-align:left;">
-      <!-- <div style="display:flex; align-items:left; gap:10px;"> -->
         <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi">
-        <!-- <img src="https://gist.githubusercontent.com/Vinay-R-S/c6e0dc4b1c8f67d7b533def8f52ece37/raw/8fc19bd7c402bb00a79668c6588bbbe020deddc2/esp32.svg" height="46px"> -->
-      <!-- </div> -->
     </td>
-
   </tr>
 </table>
 
