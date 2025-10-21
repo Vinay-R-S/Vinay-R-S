@@ -73,7 +73,7 @@
       <img src="https://github-readme-activity-graph.vercel.app/graph?username=Vinay-R-S&bg_color=2e3440&hide_border=true&point=false&line=88c0d0&radius=8&area=true&area_color=88c0d0&title_color=ffffff&color=ffffff" alt="GitHub Activity Graph" width="100%">
     </td>
   </tr>
-  <tr>
+  <tr style="height: 240px">
     <td width="40%" valign="top">
       <img src="https://github-readme-stats.vercel.app/api?username=Vinay-R-S&hide_border=true&include_all_commits=true&count_private=true&show_icons=true&line_height=20&theme=nord" alt="GitHub Stats" style="height:220px; width:100%; object-fit:contain;">
     </td>
