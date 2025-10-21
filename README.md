@@ -4,132 +4,98 @@
 
 <hr>
 
-## ⚡ Languages, Tools and Technologies
+## ⚡ Tools and tech I have worked on
 
-<table>
+<table style="width:100%; border-collapse:collapse;">
   <tr>
-    <td><strong>Languages</strong></td>
-    <td><strong>Frontend & Design</strong></td>
-    <td><strong>DevOps & Deployment</strong></td>
-    <td><strong>Version Control</strong></td>
-    <td><strong>Editors</strong></td>
+    <th style="text-align:left; margin-right:5px;">Languages</th>
+    <th style="text-align:left; margin-right:5px;">Frontend</th>
+    <th style="text-align:left; margin-right:5px;">Backend</th>
+    <th style="text-align:left; margin-right:5px;">Database</th>
   </tr>
   <tr>
-    <td>
-      <img src="https://skillicons.dev/icons?i=c,cpp,java,py&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=c,cpp,java,python">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=js,react,nextjs,tailwindcss,bootstrap,figma&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=javascript,typescript,tailwindcss,reactjs,nextjs,expo">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=vercel,render,aws,gcp,docker,githubactions">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skillicons.dev/icons?i=nodejs,express,flask,fastapi,supabase&theme=dark">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=git,github&theme=dark">
-    </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=vscode&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=mysql,sqlite,mongodb,postgresql">
     </td>
   </tr>
+
   <tr>
-    <td><strong>Backend</strong></td>
-    <td><strong>Databases</strong></td>
-    <td><strong>API & Testing</strong></td>
-    <td><strong>Languages</strong></td>
-    <td><strong>Machine Learning</strong></td>
-    <td><strong>Miscellaneous</strong></td>
+    <th style="text-align:left; margin-right:5px;">Cloud & Hosting</th>
+    <th style="text-align:left; margin-right:5px;">ML & DS</th>
+    <th style="text-align:left; margin-right:5px;">Computer Vision</th>
+    <th style="text-align:left; margin-right:5px;">DL & Dev Platforms</th>
   </tr>
   <tr>
-    <td>
-      <img src="https://skillicons.dev/icons?i=nodejs,express,flask,fastapi&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=amazonwebservices,googlecloud,huggingface,vercel,render">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=mysql,sqlite,postgresql,mongodb&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=pandas,numpy,matplotlib,scikitlearn">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=postman&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=opencv,yolo">
     </td>
-    <!-- <td>
-      <img src="https://skillicons.dev/icons?i=c,cpp,java,py&theme=dark">
-    </td> -->
-    <td>
-      <img src="https://skillicons.dev/icons?i=sklearn,tensorflow,opencv&theme=dark">
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=tensorflow,pytorch,googlecolaboratory,kaggle">
     </td>
-    <td>
-      <img src="https://skillicons.dev/icons?i=md,raspberrypi,arduino,linux&theme=dark">
+  </tr>
+
+  <tr>
+    <th style="text-align:left; margin-right:5px;">IDE</th>
+    <th style="text-align:left; margin-right:5px;">DevOps & Automation</th>
+    <th style="text-align:left; margin-right:5px;">Design & Tools</th>
+    <th style="text-align:left; margin-right:5px;">IoT</th>
+  </tr>
+  <tr>
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=visualstudiocode,cursor,intellijidea,arduino">
+    </td>
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=github,git,githubactions,docker,n8n">
+    </td>
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=figma,canva,postman,notion,obsidian,obs">
+    </td>
+    <td style="text-align:left; margin-right:5px;">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi">
     </td>
   </tr>
 </table>
-
-
-<!-- <table> 
-<tr>
-<td><strong>Frontend & Design</strong></td>
-<td><strong>DevOps & Deployment</strong></td>
-<td><strong>Version Control</strong></td>
-<td><strong>Editors</strong></td>
-</tr>
-<tr>
-<td>
-<img src="https://skillicons.dev/icons?i=js,react,nextjs,tailwindcss,bootstrap,figma&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=vercel,render,aws,gcp,docker,githubactions">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=git,github&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=vscode&theme=dark">
-</td>
-</tr>
-</table>
-
-<table>
-<tr>
-<td><strong>Backend</strong></td>
-<td><strong>Databases</strong></td>
-<td><strong>API & Testing</strong></td>
-<td><strong>Languages</strong></td>
-<td><strong>Miscellaneous</strong></td>
-</tr>
-<tr>
-<td>
-<img src="https://skillicons.dev/icons?i=nodejs,express,flask,fastapi&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=mysql,sqlite,postgresql,mongodb&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=postman&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=c,cpp,java,py&theme=dark">
-</td>
-<td>
-<img src="https://skillicons.dev/icons?i=md,raspberrypi,arduino,linux&theme=dark">
-</td>
-</tr>
-</table> -->
 
 <hr>
 
-## 📊 Stats
+## 📊 GitHub Stats
 
-<table>
-<tr>
-<td colspan="2">
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=Vinay-R-S&bg_color=2e3440&hide_border=true&point=false&line=88c0d0&radius=8&area=true&area_color=88c0d0&title_color=ffffff&color=ffffff">
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://www.linkedin.com/in/vinayrsaunshi">
-<img src="https://github-readme-stats.vercel.app/api?username=Vinay-R-S&hide_border=true&include_all_commits=true&count_private=true&show_icons=true&line_height=20&theme=nord">
-</a>
-</td>
-<td>
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vinay-R-S&langs_count=6&hide_border=true&border_radius=4.5&layout=compact&theme=nord">
-</td>
-</tr>
+<table width="100%">
+  <tr>
+    <td colspan="3">
+      <img src="https://github-readme-activity-graph.vercel.app/graph?username=Vinay-R-S&bg_color=2e3440&hide_border=true&point=false&line=88c0d0&radius=8&area=true&area_color=88c0d0&title_color=ffffff&color=ffffff" alt="GitHub Activity Graph" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="40%" valign="top">
+      <img src="https://github-readme-stats.vercel.app/api?username=Vinay-R-S&hide_border=true&include_all_commits=true&count_private=true&show_icons=true&line_height=20&theme=nord" alt="GitHub Stats" style="height:220px; width:100%; object-fit:contain;">
+    </td>
+    <td width="35%" valign="top">
+      <img src="https://github-readme-streak-stats.herokuapp.com/?user=Vinay-R-S&theme=nord&hide_border=true" alt="GitHub Streak Stats" style="height:220px; width:100%; object-fit:contain;">
+    </td>
+    <td width="25%" valign="top">
+      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vinay-R-S&langs_count=6&hide_border=true&border_radius=4.5&layout=compact&theme=nord" alt="Top Languages" style="height:220px; width:100%; object-fit:contain;">
+    </td>
+  </tr>
 </table>
+
+## 👦🏻 Profiles
+
+[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/vinayrsaunshi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi)
+[![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08)
