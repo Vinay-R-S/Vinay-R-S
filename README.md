@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="./assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px"/>
+  <img src="./Assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px"/>
 </div>
 
 <hr>
