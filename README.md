@@ -58,7 +58,7 @@
       <img src="https://skills.syvixor.com/api/icons?perline=15&i=figma,canva,postman,notion,obsidian,obs">
     </td>
     <td style="text-align:left;">
-        <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi">
+        <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi,esp32">
     </td>
   </tr>
 </table>
