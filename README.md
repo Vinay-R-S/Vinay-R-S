@@ -1,5 +1,5 @@
 <div align="center">
-<img src="./Assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px" />
+  <img src="./assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px" />
 </div>
 
 <hr>
@@ -30,22 +30,19 @@
 
   <tr>
     <th style="text-align:left; margin-right:5px;">Cloud & Hosting</th>
-    <th style="text-align:left; margin-right:5px;">ML & DS</th>
-    <th style="text-align:left; margin-right:5px;">Computer Vision</th>
-    <th style="text-align:left; margin-right:5px;">DL & Dev Platforms</th>
+    <th style="text-align:left; margin-right:5px;" colspan="2">AI & ML</th>
+    <th style="text-align:left; margin-right:5px;">IoT</th>
   </tr>
   <tr>
-    <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=amazonwebservices,googlecloud,huggingface,vercel,render">
-    </td>
-    <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=pandas,numpy,matplotlib,scikitlearn">
-    </td>
-    <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=opencv,yolo">
-    </td>
-    <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=tensorflow,pytorch,googlecolaboratory,kaggle">
+      <td style="text-align:left; margin-right:5px;">
+          <img src="https://skills.syvixor.com/api/icons?perline=15&i=amazonwebservices,googlecloud,huggingface,vercel,render">
+      </td>
+      <td style="text-align:left; margin-right:5px;" colspan="2">
+          <img src="https://skills.syvixor.com/api/icons?perline=15&i=pandas,numpy,matplotlib,scikitlearn,opencv,yolo,tensorflow,pytorch,googlecolaboratory,kaggle">
+      </td>
+      <td style="text-align:left; margin-right:5px;">
+        <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi">
+        <img width="48px" src="https://gist.githubusercontent.com/Vinay-R-S/c6e0dc4b1c8f67d7b533def8f52ece37/raw/8fc19bd7c402bb00a79668c6588bbbe020deddc2/esp32.svg">
     </td>
   </tr>
 
@@ -53,7 +50,7 @@
     <th style="text-align:left; margin-right:5px;">IDE</th>
     <th style="text-align:left; margin-right:5px;">DevOps & Automation</th>
     <th style="text-align:left; margin-right:5px;">Design & Tools</th>
-    <th style="text-align:left; margin-right:5px;">IoT</th>
+    <th style="text-align:left; margin-right:5px;"></th>
   </tr>
   <tr>
     <td style="text-align:left; margin-right:5px;">
@@ -65,9 +62,7 @@
     <td style="text-align:left; margin-right:5px;">
       <img src="https://skills.syvixor.com/api/icons?perline=15&i=figma,canva,postman,notion,obsidian,obs">
     </td>
-    <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=arduino,raspberrypi">
-    </td>
+    <td style="text-align:left; margin-right:5px; display:flex; gap:10px;"> </td>
   </tr>
 </table>
 
