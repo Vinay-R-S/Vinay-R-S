@@ -73,15 +73,25 @@
       <img src="https://github-readme-activity-graph.vercel.app/graph?username=Vinay-R-S&bg_color=2e3440&hide_border=true&point=false&line=88c0d0&radius=8&area=true&area_color=88c0d0&title_color=ffffff&color=ffffff" alt="GitHub Activity Graph" width="100%">
     </td>
   </tr>
-  <tr style="height: 240px">
-    <td width="40%" valign="top">
-      <img src="https://github-readme-stats.vercel.app/api?username=Vinay-R-S&hide_border=true&include_all_commits=true&count_private=true&show_icons=true&line_height=20&theme=nord" alt="GitHub Stats" style="height:220px; width:100%; object-fit:contain;">
+
+  <tr>
+    <td width="40%" align="center">
+      <img
+        src="https://github-readme-stats-bnngvgtwt.vercel.app/api?username=Vinay-R-S&show_icons=true&include_all_commits=true&count_private=true&theme=nord&hide_border=true"
+        alt="GitHub Stats"
+      />
     </td>
-    <td width="35%" valign="top">
-      <img src="https://github-readme-streak-stats.herokuapp.com/?user=Vinay-R-S&theme=nord&hide_border=true" alt="GitHub Streak Stats" style="height:220px; width:100%; object-fit:contain;">
+    <td width="35%" align="center">
+      <img
+        src="https://streak-stats.demolab.com?user=Vinay-R-S&theme=nord&hide_border=true"
+        alt="GitHub Streak"
+      />
     </td>
-    <td width="25%" valign="top">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Vinay-R-S&langs_count=6&hide_border=true&border_radius=4.5&layout=compact&theme=nord" alt="Top Languages" style="height:220px; width:100%; object-fit:contain;">
+    <td width="25%" align="center">
+      <img
+        src="https://github-readme-stats-bnngvgtwt.vercel.app/api/top-langs/?username=Vinay-R-S&layout=compact&langs_count=6&theme=nord&hide_border=true"
+        alt="Top Languages"
+      />
     </td>
   </tr>
 </table>
