@@ -98,6 +98,6 @@
 
 ## 👦🏻 Profiles
 
-[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/vinayrsaunshi)
+[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/u/vinayrsaunshi)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi)
 [![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08)
