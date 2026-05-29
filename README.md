@@ -1,8 +1,7 @@
 <div align="center">
-  <img src="./Assets/GitHubBanner_cat.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px"/>
+  <img src="./Assets/GitHubBanner_v2.png" alt="Vinay Saunshi" style="width: 100%; height: auto; border-radius: 15px"/>
 </div>
 
-<hr>
 
 ## ⚡ Tools and tech I have worked on
 
@@ -15,10 +14,10 @@
   </tr>
   <tr>
     <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=c,cpp,java,python">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=c,java,python">
     </td>
     <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=javascript,typescript,tailwindcss,reactjs,nextjs,expo">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=javascript,typescript,tailwindcss,reactjs,nextjs">
     </td>
     <td style="text-align:left; margin-right:5px;">
       <img src="https://skillicons.dev/icons?i=nodejs,express,flask,fastapi,supabase&theme=dark">
@@ -49,7 +48,7 @@
   </tr>
   <tr>
     <td style="text-align:left; margin-right:5px;">
-      <img src="https://skills.syvixor.com/api/icons?perline=15&i=visualstudiocode,cursor,intellijidea,arduino">
+      <img src="https://skills.syvixor.com/api/icons?perline=15&i=visualstudiocode,codex,antigravity,arduino">
     </td>
     <td style="text-align:left; margin-right:5px;">
       <img src="https://skills.syvixor.com/api/icons?perline=15&i=github,git,githubactions,docker,n8n">
@@ -63,7 +62,6 @@
   </tr>
 </table>
 
-<hr>
 
 ## 📊 GitHub Stats
 
@@ -98,6 +96,6 @@
 
 ## 👦🏻 Profiles
 
-[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/u/vinayrsaunshi/)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi/)
-[![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08/)
+[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/vinayrsaunshi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi)
+[![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08)
