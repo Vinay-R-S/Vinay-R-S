@@ -75,7 +75,7 @@
   <tr>
     <td width="40%" align="center">
       <img
-        src="https://github-readme-stats-bnngvgtwt.vercel.app/api?username=Vinay-R-S&show_icons=true&include_all_commits=true&count_private=true&theme=nord&hide_border=true"
+        src="./profile/stats.svg"
         alt="GitHub Stats"
       />
     </td>
@@ -87,7 +87,7 @@
     </td>
     <td width="25%" align="center">
       <img
-        src="https://github-readme-stats-bnngvgtwt.vercel.app/api/top-langs/?username=Vinay-R-S&layout=compact&langs_count=6&theme=nord&hide_border=true"
+        src="./profile/top-langs.svg"
         alt="Top Languages"
       />
     </td>
