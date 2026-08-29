@@ -45,16 +45,16 @@ I enjoy building clean, efficient and impactful solutions that solve real proble
 
 ## GitHub Stats
 
-<table width="100%">
+<table>
   <tr>
-    <td align="left" width="60%"><img src="./profile/stats.svg" alt="GitHub Stats" width="100%"></td>
-    <td align="left" width="40%"><img src="./profile/top-langs.svg" alt="Top Languages" width="100%"></td>
+    <td align="left" valign="top"><img src="./profile/stats.svg" alt="GitHub Stats"></td>
+    <td align="left" valign="top"><img src="./profile/top-langs.svg" alt="Top Languages"></td>
   </tr>
   <tr>
-    <td align="left" colspan="2"><img src="./profile/streak.svg" alt="GitHub Streak" width="100%"></td>
+    <td align="left" colspan="2"><img src="./profile/streak.svg" alt="GitHub Streak"></td>
   </tr>
   <tr>
-    <td align="left" colspan="2"><img src="./profile/activity.svg" alt="Contribution Graph" width="100%"></td>
+    <td align="left" colspan="2"><img src="./profile/activity.svg" alt="Contribution Graph"></td>
   </tr>
 </table>
 
