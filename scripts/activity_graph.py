@@ -7,13 +7,12 @@ Outputs
 """
 import json
 import os
-import re
 import urllib.request
 from collections import OrderedDict
 from datetime import date, timedelta
 
 USER = "Vinay-R-S"
-SRC = "https://ghchart.rshah.org/{}".format(USER)
+SRC = "https://github-contributions-api.jogruber.de/v4/{}?y=last".format(USER)
 
 W, H = 940, 230
 PAD_L, PAD_R, PAD_T, PAD_B = 44, 22, 54, 34
@@ -25,16 +24,17 @@ MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
 
 
 def fetch_days():
+    """Daily contribution counts from GitHub's own calendar, via a CORS API."""
     req = urllib.request.Request(SRC, headers={"User-Agent": "readme-cards"})
     with urllib.request.urlopen(req, timeout=30) as res:
-        svg = res.read().decode("utf-8")
-    pairs = re.findall(r'data-score="(\d+)"\s+data-date="(\d{4}-\d{2}-\d{2})"', svg)
-    if not pairs:
+        payload = json.loads(res.read().decode("utf-8"))
+    entries = payload.get("contributions") or []
+    if not entries:
         raise SystemExit("no contribution data in source")
     days = {}
-    for score, day in pairs:
-        y, m, d = (int(v) for v in day.split("-"))
-        days[date(y, m, d)] = int(score)
+    for entry in entries:
+        y, m, d = (int(v) for v in entry["date"].split("-"))
+        days[date(y, m, d)] = int(entry["count"])
     return days
 
 

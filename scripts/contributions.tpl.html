@@ -65,6 +65,26 @@
   .tip strong { color: var(--line); }
   .tip[data-show="1"] { opacity: 1; }
   .hint { color: var(--muted); font-size: 12px; margin: 12px 2px 0; }
+  .dot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-left: 10px;
+    padding: 2px 9px;
+    border: 1px solid var(--grid);
+    border-radius: 999px;
+    font-size: 11px;
+  }
+  .dot::before {
+    content: "";
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--muted);
+  }
+  .dot[data-state="live"]::before { background: #a3be8c; }
+  .dot[data-state="stale"]::before { background: #d08770; }
+  .dot[data-state="loading"]::before { background: #ebcb8b; }
   a { color: var(--line); }
 </style>
 </head>
@@ -84,11 +104,14 @@
     <svg id="chart" viewBox="0 0 940 250" role="img" aria-label="Contribution chart"></svg>
     <div class="tip" id="tip" data-show="0"></div>
   </div>
-  <p class="hint">Hover the chart for the exact date and contribution count.</p>
+  <p class="hint">Hover the chart for the exact date and contribution count.
+    <span class="dot" id="status" data-state="loading">loading</span></p>
 </div>
 
 <script>
-  const DATA = __DATA__.map(([d, n]) => ({ date: new Date(d + "T00:00:00"), n }));
+  const API = "https://github-contributions-api.jogruber.de/v4/__USER__?y=last";
+  const toPoints = (rows) => rows.map(([d, n]) => ({ date: new Date(d + "T00:00:00"), n }));
+  let DATA = toPoints(__DATA__);
   const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
   const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const NS = "http://www.w3.org/2000/svg";
@@ -303,7 +326,33 @@
 
   chart.addEventListener("pointermove", onMove);
   chart.addEventListener("pointerleave", onLeave);
+
+  const status = document.getElementById("status");
+
+  async function refresh() {
+    status.textContent = "loading";
+    status.dataset.state = "loading";
+    try {
+      const res = await fetch(API, { cache: "no-store" });
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const rows = (await res.json()).contributions || [];
+      if (!rows.length) throw new Error("empty");
+      DATA = toPoints(rows.map((r) => [r.date, r.count]));
+      status.textContent = "live, updated " + new Date().toLocaleTimeString();
+      status.dataset.state = "live";
+    } catch (err) {
+      status.textContent = "offline, showing last saved snapshot";
+      status.dataset.state = "stale";
+    }
+    draw();
+  }
+
   draw();
+  refresh();
+  setInterval(refresh, 5 * 60 * 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden) refresh();
+  });
 </script>
 </body>
 </html>
