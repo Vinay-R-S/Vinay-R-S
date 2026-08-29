@@ -13,25 +13,56 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Generate stats card
+        continue-on-error: true
         uses: soulteary/github-readme-stats-action@v1.0.0
         with:
           card: stats
           options: 'username=Vinay-R-S&show_icons=true&include_all_commits=true&count_private=true&theme=nord&hide_border=true'
           path: profile/stats.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
       - name: Generate top languages card
+        continue-on-error: true
         uses: soulteary/github-readme-stats-action@v1.0.0
         with:
           card: top-langs
           options: 'username=Vinay-R-S&layout=compact&langs_count=6&theme=nord&hide_border=true'
           path: profile/top-langs.svg
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Fetch streak card
+        continue-on-error: true
+        run: |
+          curl -fsSL --retry 3 --retry-delay 5 \
+            "https://streak-stats.demolab.com?user=Vinay-R-S&theme=nord&hide_border=true&background=2e3440" \
+            -o profile/streak.svg.tmp
+          mv profile/streak.svg.tmp profile/streak.svg
+
+      - name: Fetch contribution graph
+        continue-on-error: true
+        run: |
+          curl -fsSL --retry 3 --retry-delay 5 \
+            "https://ghchart.rshah.org/88c0d0/Vinay-R-S" \
+            -o profile/activity.svg.tmp
+          sed -i 's/#EEEEEE/#3b4252/g' profile/activity.svg.tmp
+          mv profile/activity.svg.tmp profile/activity.svg
+
+      - name: Discard broken cards
+        run: |
+          rm -f profile/*.tmp
+          for f in profile/stats.svg profile/top-langs.svg profile/streak.svg profile/activity.svg; do
+            [ -f "$f" ] || continue
+            if [ ! -s "$f" ] || grep -qiE 'Something went wrong|Resource not accessible|FORBIDDEN|Error' "$f"; then
+              echo "::warning::$f came back broken, keeping the previous version"
+              git checkout -- "$f" 2>/dev/null || rm -f "$f"
+            fi
+          done
 
       - name: Commit cards
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add profile/*.svg
-          git commit -m "chore: update README cards" || exit 0
+          git add -A profile
+          git diff --cached --quiet && exit 0
+          git commit -m "chore: update README cards"
           git push
