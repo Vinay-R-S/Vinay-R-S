@@ -1,6 +1,6 @@
 <svg width="940" height="230" viewBox="0 0 940 230" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Contribution activity">
 <defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#88c0d0" stop-opacity="0.38"/><stop offset="100%" stop-color="#88c0d0" stop-opacity="0"/></linearGradient></defs>
-<rect width="940" height="230" rx="8" fill="#2e3440"/>
+<rect x="0.5" y="0.5" width="939" height="229" rx="8" fill="#2e3440" stroke="#ffffff" stroke-width="1"/>
 <text x="44" y="30" fill="#88c0d0" font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="18" font-weight="600">Contribution Activity</text>
 <text x="918" y="30" text-anchor="end" fill="#81a1c1" font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="13">280 contributions in the last year</text>
 <line x1="44" y1="196.0" x2="918" y2="196.0" stroke="#434c5e" stroke-width="1" stroke-dasharray="3 4"/>

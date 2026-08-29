@@ -54,7 +54,7 @@ I enjoy building clean, efficient and impactful solutions that solve real proble
     <td align="left" valign="top" colspan="3"><img src="./profile/streak.svg" alt="GitHub Streak" height="185"></td>
   </tr>
   <tr>
-    <td align="left" valign="top" colspan="2"><img src="./profile/top-langs.svg" alt="Most Used Languages" height="170"></td>
+    <td align="left" valign="top" colspan="2"><img src="./profile/top-langs.svg" alt="Languages by Code Size" height="170"></td>
     <td align="left" valign="top" colspan="2"><img src="./profile/repos-per-language.svg" alt="Top Languages by Repo" height="170"></td>
     <td align="left" valign="top" colspan="2"><img src="./profile/productive-time.svg" alt="Commits per Hour" height="170"></td>
   </tr>

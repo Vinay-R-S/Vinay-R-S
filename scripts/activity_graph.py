@@ -92,7 +92,8 @@ def render(series):
                '<stop offset="0%" stop-color="{}" stop-opacity="0.38"/>'
                '<stop offset="100%" stop-color="{}" stop-opacity="0"/>'
                '</linearGradient></defs>'.format(LINE, LINE))
-    out.append('<rect width="{}" height="{}" rx="8" fill="{}"/>'.format(W, H, BG))
+    out.append('<rect x="0.5" y="0.5" width="{}" height="{}" rx="8" fill="{}" '
+               'stroke="#ffffff" stroke-width="1"/>'.format(W - 1, H - 1, BG))
     out.append('<text x="{}" y="30" fill="{}" font-family="Segoe UI, Ubuntu, Sans-Serif" '
                'font-size="18" font-weight="600">Contribution Activity</text>'.format(PAD_L, LINE))
     out.append('<text x="{}" y="30" text-anchor="end" fill="{}" '

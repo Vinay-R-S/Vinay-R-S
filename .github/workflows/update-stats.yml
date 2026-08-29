@@ -17,7 +17,7 @@ jobs:
         uses: soulteary/github-readme-stats-action@v1.0.0
         with:
           card: stats
-          options: 'username=Vinay-R-S&show_icons=true&include_all_commits=true&count_private=true&theme=nord&hide_border=true'
+          options: 'username=Vinay-R-S&show_icons=true&include_all_commits=true&count_private=true&theme=nord&border_color=ffffff'
           path: profile/stats.svg
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
@@ -26,7 +26,7 @@ jobs:
         uses: soulteary/github-readme-stats-action@v1.0.0
         with:
           card: top-langs
-          options: 'username=Vinay-R-S&layout=compact&langs_count=6&theme=nord&hide_border=true'
+          options: 'username=Vinay-R-S&layout=compact&langs_count=6&theme=nord&border_color=ffffff&custom_title=Languages%20by%20Code%20Size'
           path: profile/top-langs.svg
           token: ${{ secrets.STATS_TOKEN || secrets.GITHUB_TOKEN }}
 
@@ -34,7 +34,7 @@ jobs:
         continue-on-error: true
         run: |
           curl -fsSL --retry 3 --retry-delay 5 \
-            "https://streak-stats.demolab.com?user=Vinay-R-S&theme=nord&hide_border=true&background=2e3440" \
+            "https://streak-stats.demolab.com?user=Vinay-R-S&theme=nord&background=2e3440&border=ffffff" \
             -o profile/streak.svg.tmp
           mv profile/streak.svg.tmp profile/streak.svg
 
