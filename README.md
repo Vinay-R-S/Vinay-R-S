@@ -62,4 +62,14 @@ I enjoy building clean, efficient and impactful solutions that solve real proble
 
 ## Contribution Graph
 
-<img src="./profile/activity.svg" alt="Contribution Activity" width="100%">
+[![Interactive graph](https://img.shields.io/badge/Interactive%20graph-hover%20for%20daily%20counts-2e3440?style=flat&logo=githubpages&logoColor=88c0d0)](https://vinay-r-s.github.io/Vinay-R-S/contributions.html)
+
+<details open>
+  <summary><b>Last year</b></summary>
+  <img src="./profile/activity.svg" alt="Contribution activity, last year" width="100%">
+</details>
+
+<details>
+  <summary><b>Last 30 days</b></summary>
+  <img src="./profile/activity-month.svg" alt="Contribution activity, last 30 days" width="100%">
+</details>

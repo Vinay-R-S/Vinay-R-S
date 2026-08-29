@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contribution Activity</title>
+<style>
+  :root {
+    --bg: #242933;
+    --card: #2e3440;
+    --grid: #434c5e;
+    --line: #88c0d0;
+    --text: #d8dee9;
+    --muted: #81a1c1;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    padding: 32px 20px;
+    background: var(--bg);
+    color: var(--text);
+    font: 14px/1.5 "Segoe UI", Ubuntu, "Helvetica Neue", sans-serif;
+  }
+  .wrap { max-width: 1000px; margin: 0 auto; }
+  h1 { font-size: 20px; font-weight: 600; color: var(--line); margin: 0 0 4px; }
+  .sub { color: var(--muted); margin: 0 0 20px; }
+  .card {
+    position: relative;
+    background: var(--card);
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    padding: 16px 18px 10px;
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .total { color: var(--muted); font-size: 13px; }
+  .tabs { display: inline-flex; border: 1px solid var(--grid); border-radius: 6px; overflow: hidden; }
+  .tabs button {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font: inherit;
+    font-size: 13px;
+    padding: 5px 14px;
+    cursor: pointer;
+  }
+  .tabs button + button { border-left: 1px solid var(--grid); }
+  .tabs button[aria-selected="true"] { background: var(--line); color: #2e3440; font-weight: 600; }
+  .tabs button:focus-visible { outline: 2px solid var(--line); outline-offset: -2px; }
+  svg { display: block; width: 100%; height: auto; margin-top: 6px; }
+  .tip {
+    position: absolute;
+    pointer-events: none;
+    background: #3b4252;
+    border: 1px solid var(--grid);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 12px;
+    white-space: nowrap;
+    opacity: 0;
+    transition: opacity .12s ease;
+    transform: translate(-50%, -100%);
+    z-index: 2;
+  }
+  .tip strong { color: var(--line); }
+  .tip[data-show="1"] { opacity: 1; }
+  .hint { color: var(--muted); font-size: 12px; margin: 12px 2px 0; }
+  a { color: var(--line); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Contribution Activity</h1>
+  <p class="sub"><a href="https://github.com/__USER__">@__USER__</a></p>
+
+  <div class="card">
+    <div class="bar">
+      <div class="tabs" role="tablist" aria-label="Range">
+        <button role="tab" id="tab-month" aria-selected="false" data-range="month">Month</button>
+        <button role="tab" id="tab-year" aria-selected="true" data-range="year">Year</button>
+      </div>
+      <div class="total" id="total"></div>
+    </div>
+    <svg id="chart" viewBox="0 0 940 250" role="img" aria-label="Contribution chart"></svg>
+    <div class="tip" id="tip" data-show="0"></div>
+  </div>
+  <p class="hint">Hover the chart for the exact date and contribution count.</p>
+</div>
+
+<script>
+  const DATA = __DATA__.map(([d, n]) => ({ date: new Date(d + "T00:00:00"), n }));
+  const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const NS = "http://www.w3.org/2000/svg";
+  const W = 940, H = 250, PAD = { l: 44, r: 22, t: 18, b: 34 };
+  const PW = W - PAD.l - PAD.r, PH = H - PAD.t - PAD.b;
+
+  const chart = document.getElementById("chart");
+  const tip = document.getElementById("tip");
+  const totalEl = document.getElementById("total");
+  let range = "year";
+  let hot = [];
+
+  const el = (name, attrs, text) => {
+    const node = document.createElementNS(NS, name);
+    for (const k in attrs) node.setAttribute(k, attrs[k]);
+    if (text !== undefined) node.textContent = text;
+    return node;
+  };
+
+  const niceMax = (v) => {
+    if (v <= 5) return 5;
+    const step = Math.pow(10, String(Math.round(v)).length - 1);
+    for (const m of [1, 1.5, 2, 2.5, 3, 4, 5, 10]) {
+      if (step * m >= v) return Math.round(step * m);
+    }
+    return v;
+  };
+
+  const label = (d) => DAYS[d.getDay()] + ", " + d.getDate() + " " + MONTHS[d.getMonth()] + " " + d.getFullYear();
+
+  function monthSeries() {
+    return DATA.slice(-30).map((p) => ({ ...p, label: label(p.date) }));
+  }
+
+  function yearSeries() {
+    const weeks = new Map();
+    for (const p of DATA) {
+      const start = new Date(p.date);
+      start.setDate(start.getDate() - ((start.getDay() + 6) % 7));
+      const key = start.toISOString().slice(0, 10);
+      const bucket = weeks.get(key) || { date: start, n: 0, days: 0 };
+      bucket.n += p.n;
+      bucket.days += 1;
+      weeks.set(key, bucket);
+    }
+    const out = [...weeks.values()].filter((w) => w.days === 7);
+    return out.map((w) => {
+      const end = new Date(w.date);
+      end.setDate(end.getDate() + 6);
+      return {
+        ...w,
+        label: "Week of " + w.date.getDate() + " " + MONTHS[w.date.getMonth()] +
+               " to " + end.getDate() + " " + MONTHS[end.getMonth()],
+      };
+    });
+  }
+
+  function smooth(pts) {
+    if (pts.length < 2) return "";
+    const d = ["M " + pts[0][0].toFixed(1) + " " + pts[0][1].toFixed(1)];
+    for (let i = 0; i < pts.length - 1; i += 1) {
+      const p0 = pts[i - 1] || pts[0];
+      const p1 = pts[i], p2 = pts[i + 1];
+      const p3 = pts[i + 2] || p2;
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d.push("C " + c1[0].toFixed(1) + " " + c1[1].toFixed(1) + ", " +
+             c2[0].toFixed(1) + " " + c2[1].toFixed(1) + ", " +
+             p2[0].toFixed(1) + " " + p2[1].toFixed(1));
+    }
+    return d.join(" ");
+  }
+
+  function draw() {
+    const series = range === "month" ? monthSeries() : yearSeries();
+    const top = niceMax(Math.max(...series.map((p) => p.n), 1));
+    const unit = range === "month" ? "day" : "week";
+    chart.textContent = "";
+    hot = [];
+
+    totalEl.textContent = series.reduce((a, p) => a + p.n, 0) +
+      " contributions in the last " + (range === "month" ? "30 days" : "year");
+
+    const defs = el("defs");
+    const grad = el("linearGradient", { id: "g", x1: "0", y1: "0", x2: "0", y2: "1" });
+    grad.append(el("stop", { offset: "0%", "stop-color": "#88c0d0", "stop-opacity": "0.38" }),
+                el("stop", { offset: "100%", "stop-color": "#88c0d0", "stop-opacity": "0" }));
+    defs.append(grad);
+    chart.append(defs);
+
+    [0, 0.5, 1].forEach((f) => {
+      const y = PAD.t + PH - f * PH;
+      chart.append(el("line", {
+        x1: PAD.l, y1: y, x2: W - PAD.r, y2: y,
+        stroke: "#434c5e", "stroke-width": 1, "stroke-dasharray": "3 4",
+      }));
+      chart.append(el("text", {
+        x: PAD.l - 8, y: y + 4, "text-anchor": "end",
+        fill: "#81a1c1", "font-size": 11,
+      }, Math.round(top * f)));
+    });
+
+    if (range === "month") {
+      const slot = PW / series.length;
+      const bw = Math.min(slot - 8, 26);
+      series.forEach((p, i) => {
+        const cx = PAD.l + i * slot + slot / 2;
+        if (p.n) {
+          const bh = Math.max((p.n / top) * PH, 3);
+          chart.append(el("rect", {
+            x: cx - bw / 2, y: PAD.t + PH - bh, width: bw, height: bh,
+            rx: 3, fill: "#88c0d0", "fill-opacity": 0.85,
+          }));
+        }
+        if (i % 3 === 0 || i === series.length - 1) {
+          chart.append(el("text", {
+            x: cx, y: H - 12, "text-anchor": "middle", fill: "#81a1c1", "font-size": 10,
+          }, p.date.getDate()));
+        }
+        hot.push({ x: cx, y: PAD.t + PH - (p.n / top) * PH, point: p, unit });
+      });
+    } else {
+      const step = PW / Math.max(series.length - 1, 1);
+      const pts = series.map((p, i) => [PAD.l + i * step, PAD.t + PH - (p.n / top) * PH]);
+      const path = smooth(pts);
+      chart.append(el("path", {
+        d: path + " L " + pts[pts.length - 1][0].toFixed(1) + " " + (PAD.t + PH) +
+           " L " + pts[0][0].toFixed(1) + " " + (PAD.t + PH) + " Z",
+        fill: "url(#g)",
+      }));
+      chart.append(el("path", {
+        d: path, fill: "none", stroke: "#88c0d0", "stroke-width": 2.2,
+        "stroke-linecap": "round", "stroke-linejoin": "round",
+      }));
+      let seen = null, lastX = null;
+      series.forEach((p, i) => {
+        const x = PAD.l + i * step;
+        if (p.date.getMonth() !== seen && (lastX === null || x - lastX >= 34)) {
+          seen = p.date.getMonth();
+          lastX = x;
+          chart.append(el("text", {
+            x: x, y: H - 12, "text-anchor": "middle", fill: "#81a1c1", "font-size": 11,
+          }, MONTHS[p.date.getMonth()]));
+        }
+        hot.push({ x: x, y: pts[i][1], point: p, unit });
+      });
+    }
+
+    const guide = el("line", {
+      id: "guide", y1: PAD.t, y2: PAD.t + PH, stroke: "#88c0d0",
+      "stroke-width": 1, "stroke-dasharray": "2 3", opacity: 0,
+    });
+    const dot = el("circle", {
+      id: "dot", r: 4, fill: "#2e3440", stroke: "#88c0d0", "stroke-width": 2, opacity: 0,
+    });
+    chart.append(guide, dot);
+  }
+
+  function nearest(svgX) {
+    let best = null;
+    for (const h of hot) {
+      const dist = Math.abs(h.x - svgX);
+      if (!best || dist < best.dist) best = { dist, h };
+    }
+    return best && best.h;
+  }
+
+  function onMove(event) {
+    if (!hot.length) return;
+    const box = chart.getBoundingClientRect();
+    const scale = W / box.width;
+    const hit = nearest((event.clientX - box.left) * scale);
+    if (!hit) return;
+
+    const guide = chart.querySelector("#guide");
+    const dot = chart.querySelector("#dot");
+    guide.setAttribute("x1", hit.x);
+    guide.setAttribute("x2", hit.x);
+    guide.setAttribute("opacity", 1);
+    dot.setAttribute("cx", hit.x);
+    dot.setAttribute("cy", hit.y);
+    dot.setAttribute("opacity", 1);
+
+    const plural = hit.point.n === 1 ? "contribution" : "contributions";
+    tip.innerHTML = "<strong>" + hit.point.n + "</strong> " + plural + " &middot; " +
+                    (hit.unit === "day" ? "this day" : "this week") +
+                    "<br>" + hit.point.label;
+    tip.dataset.show = "1";
+    const card = chart.parentElement.getBoundingClientRect();
+    tip.style.left = Math.min(Math.max(hit.x / scale + (box.left - card.left), 70), card.width - 70) + "px";
+    tip.style.top = (hit.y / scale + (box.top - card.top) - 10) + "px";
+  }
+
+  function onLeave() {
+    tip.dataset.show = "0";
+    const guide = chart.querySelector("#guide");
+    const dot = chart.querySelector("#dot");
+    if (guide) guide.setAttribute("opacity", 0);
+    if (dot) dot.setAttribute("opacity", 0);
+  }
+
+  document.querySelectorAll("[data-range]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      range = btn.dataset.range;
+      document.querySelectorAll("[data-range]").forEach((b) => {
+        b.setAttribute("aria-selected", String(b === btn));
+      });
+      onLeave();
+      draw();
+    });
+  });
+
+  chart.addEventListener("pointermove", onMove);
+  chart.addEventListener("pointerleave", onLeave);
+  draw();
+</script>
+</body>
+</html>

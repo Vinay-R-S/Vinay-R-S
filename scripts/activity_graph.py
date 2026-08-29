@@ -1,17 +1,24 @@
-"""Render a Nord themed weekly contribution line chart to profile/activity.svg."""
+"""Render contribution charts (year + month) and the interactive page.
+
+Outputs
+  profile/activity.svg        weekly line chart, last 52 full weeks
+  profile/activity-month.svg  daily bar chart, last 30 days
+  docs/contributions.html     interactive page: month/year toggle, hover tooltips
+"""
+import json
+import os
 import re
-import sys
 import urllib.request
 from collections import OrderedDict
 from datetime import date, timedelta
 
 USER = "Vinay-R-S"
-OUT = "profile/activity.svg"
 SRC = "https://ghchart.rshah.org/{}".format(USER)
 
 W, H = 940, 230
 PAD_L, PAD_R, PAD_T, PAD_B = 44, 22, 54, 34
 BG, GRID, LINE, TEXT, MUTED = "#2e3440", "#434c5e", "#88c0d0", "#d8dee9", "#81a1c1"
+FONT = "Segoe UI, Ubuntu, Sans-Serif"
 
 MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
@@ -46,6 +53,11 @@ def weekly(days):
     return [(start, total) for start, (total, _) in items]
 
 
+def last_days(days, count=30):
+    ordered = sorted(days)
+    return [(day, days[day]) for day in ordered[-count:]]
+
+
 def nice_max(value):
     if value <= 5:
         return 5
@@ -73,53 +85,56 @@ def smooth(points):
     return " ".join(d)
 
 
-def render(series):
-    top = nice_max(max(total for _, total in series))
-    plot_w = W - PAD_L - PAD_R
+def chrome(title, note, top):
+    """Card background, title and y grid shared by both charts."""
     plot_h = H - PAD_T - PAD_B
-    step = plot_w / float(max(len(series) - 1, 1))
-    pts = [(PAD_L + i * step, PAD_T + plot_h - (total / float(top)) * plot_h)
-           for i, (_, total) in enumerate(series)]
-
-    total_sum = sum(total for _, total in series)
-    peak_i = max(range(len(series)), key=lambda i: series[i][1])
-
-    out = []
-    out.append('<svg width="{}" height="{}" viewBox="0 0 {} {}" fill="none" '
-               'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Contribution activity">'
-               .format(W, H, W, H))
-    out.append('<defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">'
-               '<stop offset="0%" stop-color="{}" stop-opacity="0.38"/>'
-               '<stop offset="100%" stop-color="{}" stop-opacity="0"/>'
-               '</linearGradient></defs>'.format(LINE, LINE))
-    out.append('<rect x="0.5" y="0.5" width="{}" height="{}" rx="8" fill="{}" '
-               'stroke="#ffffff" stroke-width="1"/>'.format(W - 1, H - 1, BG))
-    out.append('<text x="{}" y="30" fill="{}" font-family="Segoe UI, Ubuntu, Sans-Serif" '
-               'font-size="18" font-weight="600">Contribution Activity</text>'.format(PAD_L, LINE))
-    out.append('<text x="{}" y="30" text-anchor="end" fill="{}" '
-               'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="13">'
-               '{} contributions in the last year</text>'.format(W - PAD_R, MUTED, total_sum))
-
+    out = ['<svg width="{}" height="{}" viewBox="0 0 {} {}" fill="none" '
+           'xmlns="http://www.w3.org/2000/svg" role="img" aria-label="{}">'
+           .format(W, H, W, H, title),
+           '<defs><linearGradient id="fill" x1="0" y1="0" x2="0" y2="1">'
+           '<stop offset="0%" stop-color="{}" stop-opacity="0.38"/>'
+           '<stop offset="100%" stop-color="{}" stop-opacity="0"/>'
+           '</linearGradient></defs>'.format(LINE, LINE),
+           '<rect x="0.5" y="0.5" width="{}" height="{}" rx="8" fill="{}" '
+           'stroke="#ffffff" stroke-width="1"/>'.format(W - 1, H - 1, BG),
+           '<text x="{}" y="30" fill="{}" font-family="{}" font-size="18" '
+           'font-weight="600">{}</text>'.format(PAD_L, LINE, FONT, title),
+           '<text x="{}" y="30" text-anchor="end" fill="{}" font-family="{}" '
+           'font-size="13">{}</text>'.format(W - PAD_R, MUTED, FONT, note)]
     for frac in (0, 0.5, 1):
         y = PAD_T + plot_h - frac * plot_h
         out.append('<line x1="{}" y1="{:.1f}" x2="{}" y2="{:.1f}" stroke="{}" '
                    'stroke-width="1" stroke-dasharray="3 4"/>'
                    .format(PAD_L, y, W - PAD_R, y, GRID))
         out.append('<text x="{}" y="{:.1f}" text-anchor="end" fill="{}" '
-                   'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="11">{}</text>'
-                   .format(PAD_L - 8, y + 4, MUTED, int(round(top * frac))))
+                   'font-family="{}" font-size="11">{}</text>'
+                   .format(PAD_L - 8, y + 4, MUTED, FONT, int(round(top * frac))))
+    return out
 
-    area = smooth(pts) + " L {:.1f} {:.1f} L {:.1f} {:.1f} Z".format(
-        pts[-1][0], PAD_T + plot_h, pts[0][0], PAD_T + plot_h)
-    out.append('<path d="{}" fill="url(#fill)"/>'.format(area))
+
+def render_year(series):
+    top = nice_max(max(total for _, total in series))
+    plot_w, plot_h = W - PAD_L - PAD_R, H - PAD_T - PAD_B
+    step = plot_w / float(max(len(series) - 1, 1))
+    pts = [(PAD_L + i * step, PAD_T + plot_h - (total / float(top)) * plot_h)
+           for i, (_, total) in enumerate(series)]
+    peak = max(range(len(series)), key=lambda i: series[i][1])
+
+    out = chrome("Contribution Activity",
+                 "{} contributions in the last year".format(
+                     sum(t for _, t in series)), top)
+    out.append('<path d="{} L {:.1f} {:.1f} L {:.1f} {:.1f} Z" fill="url(#fill)"/>'
+               .format(smooth(pts), pts[-1][0], PAD_T + plot_h,
+                       pts[0][0], PAD_T + plot_h))
     out.append('<path d="{}" fill="none" stroke="{}" stroke-width="2.2" '
-               'stroke-linecap="round" stroke-linejoin="round"/>'.format(smooth(pts), LINE))
-    out.append('<circle cx="{:.1f}" cy="{:.1f}" r="3.5" fill="{}" stroke="{}" stroke-width="2"/>'
-               .format(pts[peak_i][0], pts[peak_i][1], BG, LINE))
+               'stroke-linecap="round" stroke-linejoin="round"/>'
+               .format(smooth(pts), LINE))
+    out.append('<circle cx="{:.1f}" cy="{:.1f}" r="3.5" fill="{}" stroke="{}" '
+               'stroke-width="2"/>'.format(pts[peak][0], pts[peak][1], BG, LINE))
     out.append('<text x="{:.1f}" y="{:.1f}" text-anchor="middle" fill="{}" '
-               'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="11" font-weight="600">{}</text>'
-               .format(min(max(pts[peak_i][0], PAD_L + 12), W - PAD_R - 12),
-                       pts[peak_i][1] - 10, TEXT, series[peak_i][1]))
+               'font-family="{}" font-size="11" font-weight="600">{}</text>'
+               .format(min(max(pts[peak][0], PAD_L + 12), W - PAD_R - 12),
+                       pts[peak][1] - 10, TEXT, FONT, series[peak][1]))
 
     seen, last_x = None, None
     for i, (start, _) in enumerate(series):
@@ -131,21 +146,68 @@ def render(series):
             continue
         last_x = x
         out.append('<text x="{:.1f}" y="{}" text-anchor="middle" fill="{}" '
-                   'font-family="Segoe UI, Ubuntu, Sans-Serif" font-size="11">{}</text>'
-                   .format(x, H - 12, MUTED, MONTHS[start.month - 1]))
-
+                   'font-family="{}" font-size="11">{}</text>'
+                   .format(x, H - 12, MUTED, FONT, MONTHS[start.month - 1]))
     out.append('</svg>')
     return "\n".join(out)
 
 
+def render_month(series):
+    top = nice_max(max(total for _, total in series))
+    plot_w, plot_h = W - PAD_L - PAD_R, H - PAD_T - PAD_B
+    slot = plot_w / float(len(series))
+    bar_w = min(slot - 8, 26)
+
+    first, last = series[0][0], series[-1][0]
+    note = "{} {} to {} {}".format(MONTHS[first.month - 1], first.day,
+                                   MONTHS[last.month - 1], last.day)
+    out = chrome("Contribution Activity", note, top)
+
+    for i, (day, total) in enumerate(series):
+        cx = PAD_L + i * slot + slot / 2.0
+        if total:
+            bh = max((total / float(top)) * plot_h, 3)
+            out.append('<rect x="{:.1f}" y="{:.1f}" width="{:.1f}" height="{:.1f}" '
+                       'rx="3" fill="{}" fill-opacity="0.85"/>'
+                       .format(cx - bar_w / 2.0, PAD_T + plot_h - bh, bar_w, bh, LINE))
+            out.append('<text x="{:.1f}" y="{:.1f}" text-anchor="middle" fill="{}" '
+                       'font-family="{}" font-size="10" font-weight="600">{}</text>'
+                       .format(cx, PAD_T + plot_h - bh - 5, TEXT, FONT, total))
+        if i % 3 == 0 or i == len(series) - 1:
+            out.append('<text x="{:.1f}" y="{}" text-anchor="middle" fill="{}" '
+                       'font-family="{}" font-size="10">{}</text>'
+                       .format(cx, H - 12, MUTED, FONT, day.day))
+    out.append('</svg>')
+    return "\n".join(out)
+
+
+def render_page(days):
+    data = [[day.isoformat(), days[day]] for day in sorted(days)]
+    template = open(os.path.join("scripts", "contributions.tpl.html"),
+                    encoding="utf-8").read()
+    return (template
+            .replace("__USER__", USER)
+            .replace("__DATA__", json.dumps(data, separators=(",", ":"))))
+
+
+def write(path, body):
+    directory = os.path.dirname(path)
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
+        fh.write(body)
+    print("wrote {}".format(path))
+
+
 def main():
-    series = weekly(fetch_days())
-    if len(series) < 4:
+    days = fetch_days()
+    year = weekly(days)
+    if len(year) < 4:
         raise SystemExit("not enough weeks to plot")
-    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
-        fh.write(render(series))
-    print("wrote {} ({} weeks)".format(OUT, len(series)))
+    write("profile/activity.svg", render_year(year))
+    write("profile/activity-month.svg", render_month(last_days(days, 30)))
+    write("docs/contributions.html", render_page(days))
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    main()

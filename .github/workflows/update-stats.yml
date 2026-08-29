@@ -48,7 +48,7 @@ jobs:
           curl -fsSL --retry 3 --retry-delay 5 -o profile/productive-time.svg.tmp "$BASE/productive-time?username=Vinay-R-S&theme=nord_dark&utcOffset=5.5"
           mv profile/productive-time.svg.tmp profile/productive-time.svg
 
-      - name: Render contribution line chart
+      - name: Render contribution charts and page
         continue-on-error: true
         run: python3 scripts/activity_graph.py
 
@@ -67,7 +67,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A profile
+          git add -A profile docs
           git diff --cached --quiet && exit 0
           git commit -m "chore: update README cards"
           git push
