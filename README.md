@@ -4,7 +4,10 @@ Developer, Problem Solver, Automation
 
 I enjoy building clean, efficient and impactful solutions that solve real problems.
 
-[![Email](https://img.shields.io/badge/vinayrsaunshi@gmail.com-2e3440?style=flat&logo=gmail&logoColor=88c0d0)](mailto:vinayrsaunshi@gmail.com)
+[![Email](https://img.shields.io/badge/Email-vinayrsaunshi@gmail.com-2e3440?style=flat&logo=gmail&logoColor=88c0d0&logoWidth=15)](mailto:vinayrsaunshi@gmail.com)
+[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/vinayrsaunshi)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi)
+[![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08)
 
 ## Tools and tech I have worked on
 
@@ -47,19 +50,14 @@ I enjoy building clean, efficient and impactful solutions that solve real proble
 
 <table>
   <tr>
-    <td align="left" valign="top"><img src="./profile/stats.svg" alt="GitHub Stats"></td>
-    <td align="left" valign="top"><img src="./profile/top-langs.svg" alt="Top Languages"></td>
+    <td align="left" valign="top"><img src="./profile/stats.svg" alt="GitHub Stats" height="195"></td>
+    <td align="left" valign="top"><img src="./profile/streak.svg" alt="GitHub Streak" height="195"></td>
   </tr>
   <tr>
-    <td align="left" colspan="2"><img src="./profile/streak.svg" alt="GitHub Streak"></td>
-  </tr>
-  <tr>
-    <td align="left" colspan="2"><img src="./profile/activity.svg" alt="Contribution Graph"></td>
+    <td align="left" valign="top" colspan="2"><img src="./profile/top-langs.svg" alt="Top Languages" height="165"></td>
   </tr>
 </table>
 
-## Profiles
+## Contribution Graph
 
-[![LeetCode](https://img.shields.io/badge/LeetCode-Vinay-FFA116?style=flat&logo=leetcode&logoColor=black&logoWidth=15)](https://leetcode.com/vinayrsaunshi)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Vinay-0A66C2?style=flat&logo=linkedin&logoColor=white&logoWidth=15)](https://www.linkedin.com/in/vinayrsaunshi)
-[![Instagram](https://img.shields.io/badge/Instagram-Vinay-E4405F?style=flat&logo=instagram&logoColor=white&logoWidth=15)](https://www.instagram.com/_vinay_rs_08)
+<img src="./profile/activity.svg" alt="Contribution Graph" width="100%">
