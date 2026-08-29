@@ -50,14 +50,16 @@ I enjoy building clean, efficient and impactful solutions that solve real proble
 
 <table>
   <tr>
-    <td align="left" valign="top"><img src="./profile/stats.svg" alt="GitHub Stats" height="195"></td>
-    <td align="left" valign="top"><img src="./profile/streak.svg" alt="GitHub Streak" height="195"></td>
+    <td align="left" valign="top" colspan="3"><img src="./profile/stats.svg" alt="GitHub Stats" height="185"></td>
+    <td align="left" valign="top" colspan="3"><img src="./profile/streak.svg" alt="GitHub Streak" height="185"></td>
   </tr>
   <tr>
-    <td align="left" valign="top" colspan="2"><img src="./profile/top-langs.svg" alt="Top Languages" height="165"></td>
+    <td align="left" valign="top" colspan="2"><img src="./profile/top-langs.svg" alt="Most Used Languages" height="170"></td>
+    <td align="left" valign="top" colspan="2"><img src="./profile/repos-per-language.svg" alt="Top Languages by Repo" height="170"></td>
+    <td align="left" valign="top" colspan="2"><img src="./profile/productive-time.svg" alt="Commits per Hour" height="170"></td>
   </tr>
 </table>
 
 ## Contribution Graph
 
-<img src="./profile/activity.svg" alt="Contribution Graph" width="100%">
+<img src="./profile/activity.svg" alt="Contribution Activity" width="100%">

@@ -38,19 +38,24 @@ jobs:
             -o profile/streak.svg.tmp
           mv profile/streak.svg.tmp profile/streak.svg
 
-      - name: Fetch contribution graph
+      - name: Fetch extra stat cards
         continue-on-error: true
+        env:
+          BASE: https://github-profile-summary-cards.vercel.app/api/cards
         run: |
-          curl -fsSL --retry 3 --retry-delay 5 \
-            "https://ghchart.rshah.org/88c0d0/Vinay-R-S" \
-            -o profile/activity.svg.tmp
-          sed -i 's/#EEEEEE/#3b4252/g' profile/activity.svg.tmp
-          mv profile/activity.svg.tmp profile/activity.svg
+          curl -fsSL --retry 3 --retry-delay 5 -o profile/repos-per-language.svg.tmp "$BASE/repos-per-language?username=Vinay-R-S&theme=nord_dark"
+          mv profile/repos-per-language.svg.tmp profile/repos-per-language.svg
+          curl -fsSL --retry 3 --retry-delay 5 -o profile/productive-time.svg.tmp "$BASE/productive-time?username=Vinay-R-S&theme=nord_dark&utcOffset=5.5"
+          mv profile/productive-time.svg.tmp profile/productive-time.svg
+
+      - name: Render contribution line chart
+        continue-on-error: true
+        run: python3 scripts/activity_graph.py
 
       - name: Discard broken cards
         run: |
           rm -f profile/*.tmp
-          for f in profile/stats.svg profile/top-langs.svg profile/streak.svg profile/activity.svg; do
+          for f in profile/*.svg; do
             [ -f "$f" ] || continue
             if [ ! -s "$f" ] || grep -qiE 'Something went wrong|Resource not accessible|FORBIDDEN|Error' "$f"; then
               echo "::warning::$f came back broken, keeping the previous version"
