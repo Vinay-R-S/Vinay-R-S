@@ -1,15 +1,13 @@
-"""Render contribution charts (year + month) and the interactive page.
+"""Render the contribution chart and the interactive page.
 
 Outputs
-  profile/activity.svg        weekly line chart, last 52 full weeks
-  profile/activity-month.svg  daily bar chart, last 30 days
-  docs/contributions.html     interactive page: month/year toggle, hover tooltips
+  profile/activity.svg     daily line chart, last 30 days
+  docs/contributions.html  interactive page: month/year toggle, hover tooltips
 """
 import json
 import os
 import urllib.request
-from collections import OrderedDict
-from datetime import date, timedelta
+from datetime import date
 
 USER = "Vinay-R-S"
 SRC = "https://github-contributions-api.jogruber.de/v4/{}?y=last".format(USER)
@@ -36,21 +34,6 @@ def fetch_days():
         y, m, d = (int(v) for v in entry["date"].split("-"))
         days[date(y, m, d)] = int(entry["count"])
     return days
-
-
-def weekly(days):
-    weeks = OrderedDict()
-    for day in sorted(days):
-        start = day - timedelta(days=day.weekday())
-        bucket = weeks.setdefault(start, [0, 0])
-        bucket[0] += days[day]
-        bucket[1] += 1
-    items = list(weeks.items())
-    if items and items[-1][1][1] < 7:
-        items.pop()
-    if items and items[0][1][1] < 7:
-        items.pop(0)
-    return [(start, total) for start, (total, _) in items]
 
 
 def last_days(days, count=30):
@@ -112,7 +95,7 @@ def chrome(title, note, top):
     return out
 
 
-def render_year(series):
+def render_month(series):
     top = nice_max(max(total for _, total in series))
     plot_w, plot_h = W - PAD_L - PAD_R, H - PAD_T - PAD_B
     step = plot_w / float(max(len(series) - 1, 1))
@@ -120,63 +103,35 @@ def render_year(series):
            for i, (_, total) in enumerate(series)]
     peak = max(range(len(series)), key=lambda i: series[i][1])
 
-    out = chrome("Contribution Activity",
-                 "{} contributions in the last year".format(
-                     sum(t for _, t in series)), top)
+    first, last = series[0][0], series[-1][0]
+    note = "{} contributions from {} {} to {} {}".format(
+        sum(t for _, t in series), MONTHS[first.month - 1], first.day,
+        MONTHS[last.month - 1], last.day)
+    out = chrome("Contribution Activity", note, top)
+
     out.append('<path d="{} L {:.1f} {:.1f} L {:.1f} {:.1f} Z" fill="url(#fill)"/>'
                .format(smooth(pts), pts[-1][0], PAD_T + plot_h,
                        pts[0][0], PAD_T + plot_h))
     out.append('<path d="{}" fill="none" stroke="{}" stroke-width="2.2" '
                'stroke-linecap="round" stroke-linejoin="round"/>'
                .format(smooth(pts), LINE))
-    out.append('<circle cx="{:.1f}" cy="{:.1f}" r="3.5" fill="{}" stroke="{}" '
+
+    for i, (day, total) in enumerate(series):
+        x, y = pts[i]
+        out.append('<circle cx="{:.1f}" cy="{:.1f}" r="2.6" fill="{}" stroke="{}" '
+                   'stroke-width="1.6"/>'.format(x, y, BG, LINE))
+        if i % 3 == 0 or i == len(series) - 1:
+            out.append('<text x="{:.1f}" y="{}" text-anchor="middle" fill="{}" '
+                       'font-family="{}" font-size="10">{} {}</text>'
+                       .format(x, H - 12, MUTED, FONT, day.day,
+                               MONTHS[day.month - 1]))
+
+    out.append('<circle cx="{:.1f}" cy="{:.1f}" r="4" fill="{}" stroke="{}" '
                'stroke-width="2"/>'.format(pts[peak][0], pts[peak][1], BG, LINE))
     out.append('<text x="{:.1f}" y="{:.1f}" text-anchor="middle" fill="{}" '
                'font-family="{}" font-size="11" font-weight="600">{}</text>'
                .format(min(max(pts[peak][0], PAD_L + 12), W - PAD_R - 12),
                        pts[peak][1] - 10, TEXT, FONT, series[peak][1]))
-
-    seen, last_x = None, None
-    for i, (start, _) in enumerate(series):
-        if start.month == seen:
-            continue
-        seen = start.month
-        x = PAD_L + i * step
-        if last_x is not None and x - last_x < 34:
-            continue
-        last_x = x
-        out.append('<text x="{:.1f}" y="{}" text-anchor="middle" fill="{}" '
-                   'font-family="{}" font-size="11">{}</text>'
-                   .format(x, H - 12, MUTED, FONT, MONTHS[start.month - 1]))
-    out.append('</svg>')
-    return "\n".join(out)
-
-
-def render_month(series):
-    top = nice_max(max(total for _, total in series))
-    plot_w, plot_h = W - PAD_L - PAD_R, H - PAD_T - PAD_B
-    slot = plot_w / float(len(series))
-    bar_w = min(slot - 8, 26)
-
-    first, last = series[0][0], series[-1][0]
-    note = "{} {} to {} {}".format(MONTHS[first.month - 1], first.day,
-                                   MONTHS[last.month - 1], last.day)
-    out = chrome("Contribution Activity", note, top)
-
-    for i, (day, total) in enumerate(series):
-        cx = PAD_L + i * slot + slot / 2.0
-        if total:
-            bh = max((total / float(top)) * plot_h, 3)
-            out.append('<rect x="{:.1f}" y="{:.1f}" width="{:.1f}" height="{:.1f}" '
-                       'rx="3" fill="{}" fill-opacity="0.85"/>'
-                       .format(cx - bar_w / 2.0, PAD_T + plot_h - bh, bar_w, bh, LINE))
-            out.append('<text x="{:.1f}" y="{:.1f}" text-anchor="middle" fill="{}" '
-                       'font-family="{}" font-size="10" font-weight="600">{}</text>'
-                       .format(cx, PAD_T + plot_h - bh - 5, TEXT, FONT, total))
-        if i % 3 == 0 or i == len(series) - 1:
-            out.append('<text x="{:.1f}" y="{}" text-anchor="middle" fill="{}" '
-                       'font-family="{}" font-size="10">{}</text>'
-                       .format(cx, H - 12, MUTED, FONT, day.day))
     out.append('</svg>')
     return "\n".join(out)
 
@@ -201,11 +156,10 @@ def write(path, body):
 
 def main():
     days = fetch_days()
-    year = weekly(days)
-    if len(year) < 4:
-        raise SystemExit("not enough weeks to plot")
-    write("profile/activity.svg", render_year(year))
-    write("profile/activity-month.svg", render_month(last_days(days, 30)))
+    series = last_days(days, 30)
+    if len(series) < 7:
+        raise SystemExit("not enough days to plot")
+    write("profile/activity.svg", render_month(series))
     write("docs/contributions.html", render_page(days))
 
 
